@@ -1,0 +1,7 @@
+{{define "draft.html"}}
+<div class="mt-4 p-4 bg-white border border-green-200 rounded">
+  <h4 class="font-bold mb-2">Generated Draft Application for: {{ .Grant.Title }}</h4>
+  <div class="whitespace-pre-wrap text-sm text-gray-800 mb-4">{{ .Draft }}</div>
+  <a href="{{ .Grant.URL }}" target="_blank" class="text-blue-600 hover:underline">View Original Grant →</a>
+</div>
+{{end}}

@@ -1,0 +1,19 @@
+# Binaries
+bin/
+grantmatch
+scraper
+server
+
+# Dependencies
+vendor/
+
+# Environment variables
+.env
+.env.local
+
+# IDEs
+.idea/
+.vscode/
+
+# OS files
+.DS_Store

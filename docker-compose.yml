@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: grantmatch
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: grantmatch
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file: .env
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

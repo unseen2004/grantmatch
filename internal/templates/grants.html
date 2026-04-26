@@ -1,0 +1,14 @@
+{{define "grants.html"}}
+{{template "base" .}}
+{{define "content"}}
+<h2 class="text-xl mb-4">All Grants</h2>
+<div class="space-y-4">
+{{ range .Grants }}
+<div class="border p-4 rounded">
+  <h3 class="text-lg font-bold">{{ .Title }}</h3>
+  <p>{{ .Description }}</p>
+</div>
+{{ end }}
+</div>
+{{end}}
+{{end}}

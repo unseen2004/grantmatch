@@ -1,0 +1,23 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrantMatch AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <style>
+        .htmx-indicator { display:none; }
+        .htmx-request .htmx-indicator { display:block; }
+        .htmx-request.htmx-indicator { display:block; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans antialiased p-8">
+    <div class="max-w-4xl mx-auto bg-white p-8 shadow rounded">
+        <h1 class="text-3xl font-bold mb-6 text-indigo-600">GrantMatch AI</h1>
+        {{template "content" .}}
+    </div>
+</body>
+</html>
+{{end}}

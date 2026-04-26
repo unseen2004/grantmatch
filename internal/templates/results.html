@@ -1,0 +1,27 @@
+{{define "results.html"}}
+{{ range .Matches }}
+<div class="border p-4 rounded bg-gray-50 relative">
+  <div class="absolute top-4 right-4 bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-bold">{{ printf "%.2f" .Score }} Match</div>
+  <h3 class="text-lg font-bold">{{ .Title }}</h3>
+  <p class="text-sm text-gray-500 mb-2">{{ .Funder }}</p>
+  <p class="mb-4">{{ .Description }}</p>
+  <div class="text-sm mb-4">
+      <span class="mr-4"><strong>Deadline:</strong> {{ if .Deadline }}{{ .Deadline.Format "2006-01-02" }}{{ else }}N/A{{ end }}</span>
+      <span><strong>Up to:</strong> ${{ if .AmountMax }}{{ .AmountMax }}{{ else }}N/A{{ end }}</span>
+  </div>
+  
+  <button hx-post="/draft"
+          hx-vals='{"session_id": "{{ $.SessionID }}", "grant_id": "{{ .GrantID }}"}'
+          hx-target="#draft-{{ .GrantID }}"
+          hx-indicator="#spinner-{{ .GrantID }}"
+          class="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700">
+    Generate Application Draft
+  </button>
+  
+  <div id="spinner-{{ .GrantID }}" class="htmx-indicator mt-2 text-green-600 text-sm">Generating draft with AI...</div>
+  <div id="draft-{{ .GrantID }}" class="mt-4"></div>
+</div>
+{{ else }}
+<p>No grants found matching your criteria.</p>
+{{ end }}
+{{end}}
