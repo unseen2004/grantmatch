@@ -41,10 +41,7 @@ Be specific, persuasive, and align the NGO mission tightly with the grant criter
 		return "", err
 	}
 	if len(resp.Candidates) > 0 && len(resp.Candidates[0].Content.Parts) > 0 {
-		part := resp.Candidates[0].Content.Parts[0]
-		if part.Text != "" {
-			return part.Text, nil
-		}
+		return resp.Candidates[0].Content.Parts[0].Text, nil
 	}
 	return "", fmt.Errorf("failed to generate draft")
 }
