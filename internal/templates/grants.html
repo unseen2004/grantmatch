@@ -1,14 +1,26 @@
-{{define "grants.html"}}
-{{template "base" .}}
-{{define "content"}}
-<h2 class="text-xl mb-4">All Grants</h2>
-<div class="space-y-4">
-{{ range .Grants }}
-<div class="border p-4 rounded">
-  <h3 class="text-lg font-bold">{{ .Title }}</h3>
-  <p>{{ .Description }}</p>
-</div>
+{{ define "grants.html" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Grants — GrantMatch AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <a href="/" class="text-sm text-teal-600 underline mb-6 block">← Back to search</a>
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">All Grants ({{ len .Grants }})</h1>
+    <div class="space-y-4">
+      {{ range .Grants }}
+      <div class="bg-white rounded-xl shadow p-4 border border-gray-100">
+        <h3 class="font-semibold text-gray-900">{{ .Title }}</h3>
+        <p class="text-xs text-gray-500 mb-1">{{ .Funder }}</p>
+        {{ if .Deadline }}<p class="text-xs text-gray-400">Deadline: {{ .Deadline.Format "Jan 2, 2006" }}</p>{{ end }}
+        {{ if .URL }}<a href="{{ .URL }}" target="_blank" class="text-xs text-teal-600 underline">View →</a>{{ end }}
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</body>
+</html>
 {{ end }}
-</div>
-{{end}}
-{{end}}

@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github.com/hackathon/grantmatch/internal/models"
+	"github.com/unseen2004/grantmatch/internal/models"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/pgvector/pgvector-go"
 )
@@ -16,18 +16,10 @@ func NewGrantRepository(pool *pgxpool.Pool) *GrantRepository {
 }
 
 func (r *GrantRepository) Upsert(ctx context.Context, grant models.Grant) error {
-	// Simple check if URL exists
-	if grant.URL != "" {
-		var exists bool
-		err := r.pool.QueryRow(ctx, "SELECT EXISTS(SELECT 1 FROM grants WHERE url=$1)", grant.URL).Scan(&exists)
-		if err == nil && exists {
-			return nil // Skip
-		}
-	}
-
 	query := `
 		INSERT INTO grants (title, description, funder, amount_min, amount_max, currency, deadline, url, region, categories, eligibility, embedding, source)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+		ON CONFLICT (url) DO NOTHING
 	`
 	vec := pgvector.NewVector(grant.Embedding)
 	_, err := r.pool.Exec(ctx, query,

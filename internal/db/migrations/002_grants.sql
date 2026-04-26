@@ -24,3 +24,4 @@ CREATE INDEX grants_embedding_idx ON grants
 
 CREATE INDEX grants_deadline_idx ON grants (deadline);
 CREATE INDEX grants_categories_idx ON grants USING GIN (categories);
+ALTER TABLE grants ADD CONSTRAINT grants_url_unique UNIQUE (url);

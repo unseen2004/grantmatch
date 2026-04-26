@@ -1,41 +1,78 @@
-{{define "home.html"}}
-{{template "base" .}}
-{{define "content"}}
-<h2 class="text-xl mb-4">Find Grants matching your NGO's Mission</h2>
-<form hx-post="/match" hx-target="#results" hx-indicator="#spinner" class="space-y-4">
-  <div>
-      <label class="block mb-1">NGO Name</label>
-      <input name="ngo_name" class="w-full border p-2 rounded" placeholder="Your NGO name" required />
-  </div>
-  <div>
-      <label class="block mb-1">Mission</label>
-      <textarea name="mission" class="w-full border p-2 rounded h-24" placeholder="Describe your mission (2-3 sentences)" required></textarea>
-  </div>
-  <div class="grid grid-cols-2 gap-4">
+{{ define "home.html" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrantMatch AI — Find Grants for Your NGO</title>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .htmx-indicator { display: none; }
+    .htmx-request .htmx-indicator { display: inline; }
+    .htmx-request.htmx-indicator { display: inline; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-2xl mx-auto px-4 py-16">
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">GrantMatch AI</h1>
+    <p class="text-gray-500 mb-8">Find matching grants and generate application drafts for your NGO — powered by AI.</p>
+
+    <form hx-post="/match"
+          hx-target="#results"
+          hx-swap="innerHTML"
+          hx-indicator="#spinner"
+          class="space-y-4 bg-white p-6 rounded-xl shadow">
+
       <div>
-          <label class="block mb-1">Region</label>
-          <select name="region" class="w-full border p-2 rounded">
+        <label class="block text-sm font-medium text-gray-700 mb-1">NGO Name</label>
+        <input name="ngo_name" required placeholder="e.g. Clean Water Initiative"
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Mission Statement</label>
+        <textarea name="mission" required rows="3"
+                  placeholder="Describe your NGO's mission and the problem you solve..."
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Region</label>
+          <select name="region" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
             <option value="global">Global</option>
             <option value="europe">Europe</option>
             <option value="africa">Africa</option>
             <option value="asia">Asia</option>
             <option value="americas">Americas</option>
           </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Budget Needed (USD)</label>
+          <input name="budget" type="number" placeholder="50000"
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+        </div>
       </div>
-      <div>
-          <label class="block mb-1">Budget Needed (USD)</label>
-          <input name="budget" type="number" class="w-full border p-2 rounded" placeholder="e.g. 50000" />
-      </div>
-  </div>
-  <div>
-      <label class="block mb-1">Categories</label>
-      <input name="categories" class="w-full border p-2 rounded" placeholder="e.g. health, education, climate" />
-  </div>
-  
-  <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Find Matching Grants</button>
-</form>
 
-<div id="spinner" class="htmx-indicator mt-4 text-indigo-600 font-bold">Searching and ranking grants...</div>
-<div id="results" class="mt-8 space-y-6"></div>
-{{end}}
-{{end}}
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Focus Areas (comma-separated)</label>
+        <input name="categories" placeholder="e.g. health, education, climate"
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm">
+      </div>
+
+      <button type="submit"
+              class="w-full bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition">
+        Find Matching Grants
+      </button>
+    </form>
+
+    <div id="spinner" class="htmx-indicator text-center py-4 text-gray-500">
+      Searching grants and computing matches…
+    </div>
+
+    <div id="results" class="mt-8 space-y-4"></div>
+  </div>
+</body>
+</html>
+{{ end }}

@@ -1,4 +1,4 @@
-module github.com/hackathon/grantmatch
+module github.com/unseen2004/grantmatch
 
 go 1.25.0
 

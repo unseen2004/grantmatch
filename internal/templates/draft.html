@@ -1,7 +1,15 @@
-{{define "draft.html"}}
-<div class="mt-4 p-4 bg-white border border-green-200 rounded">
-  <h4 class="font-bold mb-2">Generated Draft Application for: {{ .Grant.Title }}</h4>
-  <div class="whitespace-pre-wrap text-sm text-gray-800 mb-4">{{ .Draft }}</div>
-  <a href="{{ .Grant.URL }}" target="_blank" class="text-blue-600 hover:underline">View Original Grant →</a>
+{{ define "draft.html" }}
+<div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mt-2">
+  <div class="flex items-center justify-between mb-2">
+    <h4 class="text-sm font-semibold text-gray-800">Draft Application</h4>
+    <button onclick="copyDraft(this)" class="text-xs text-teal-600 underline">Copy to clipboard</button>
+  </div>
+  <p class="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed" id="draft-text-{{ .Grant.ID }}">{{ .Draft }}</p>
+  <script>
+    function copyDraft(btn) {
+      const text = btn.closest('div').querySelector('[id^="draft-text-"]').innerText;
+      navigator.clipboard.writeText(text).then(() => { btn.textContent = 'Copied!'; });
+    }
+  </script>
 </div>
-{{end}}
+{{ end }}
